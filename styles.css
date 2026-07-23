@@ -82,14 +82,14 @@
 }
 
 .tinycal-event-slot {
+	height: 1.4em;
 	display: flex;
-	flex-direction: column;
-	gap: 3px;
+	align-items: center;
 	cursor: pointer;
 }
 
 .tinycal-event-slot-empty {
-	height: calc(3px + 3px + 1.4em);
+	cursor: default;
 }
 
 .tinycal-event-slot-faded {
@@ -98,8 +98,8 @@
 
 .tinycal-event-line {
 	height: 3px;
+	width: 100%;
 	border-radius: var(--radius-s);
-	flex-shrink: 0;
 }
 
 .tinycal-event-pill {
@@ -114,8 +114,4 @@
 	text-overflow: ellipsis;
 	width: fit-content;
 	max-width: 100%;
-}
-
-.tinycal-event-pill-spacer {
-	height: 1.4em;
 }

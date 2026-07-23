@@ -19,9 +19,10 @@ export interface DayRowOptions {
 
 /**
  * Renders one row of day-cells with events stacked into lanes. Each event shows a colored
- * name "pill" on its start day, and a thin colored line on every subsequent day it's still
- * active, ending when it's closed — closed events render both at reduced opacity. Shared by
- * the month grid (called once per visible week row) and the week grid (called once for the
+ * name "pill" only on its actual start day (never repeated on later rows), and a thin colored
+ * line — vertically centered in the same fixed-height slot, so it stays level across cells —
+ * on every other day it's still active. Closed events render both at reduced opacity. Shared
+ * by the month grid (called once per visible week row) and the week grid (called once for the
  * whole row), so the lane assignment and rendering logic lives in exactly one place.
  */
 export function renderDayRow(container: HTMLElement, options: DayRowOptions): void {
@@ -64,24 +65,22 @@ export function renderDayRow(container: HTMLElement, options: DayRowOptions): vo
 
 			const event = laneEntry.event;
 			const status = getEventStatus(event, todayStr);
-			const isBarStart = dateStr === event.start || dayIndex === 0;
+			const isStartDay = dateStr === event.start;
 			const color = getEventColor(event, options.tagColors);
 
 			const slot = eventsContainer.createDiv({ cls: "tinycal-event-slot" });
 			if (status === "closed") slot.addClass("tinycal-event-slot-faded");
 
-			const line = slot.createDiv({ cls: "tinycal-event-line" });
-			line.style.backgroundColor = color;
-			if (status === "open" && dateStr === todayStr) {
-				line.style.boxShadow = `0 0 4px 1px ${color}`;
-			}
-
-			if (isBarStart) {
+			if (isStartDay) {
 				const pill = slot.createDiv({ cls: "tinycal-event-pill", text: event.title });
 				pill.style.backgroundColor = color;
 				pill.style.color = getContrastingTextColor(color);
 			} else {
-				slot.createDiv({ cls: "tinycal-event-pill-spacer" });
+				const line = slot.createDiv({ cls: "tinycal-event-line" });
+				line.style.backgroundColor = color;
+				if (status === "open" && dateStr === todayStr) {
+					line.style.boxShadow = `0 0 4px 1px ${color}`;
+				}
 			}
 
 			if (options.onEventClick) {

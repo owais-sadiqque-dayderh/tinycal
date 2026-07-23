@@ -28,6 +28,13 @@ export class EventStore {
 			throw new Error(`A note already exists at "${path}".`);
 		}
 
+		if (folder) {
+			const normalizedFolder = normalizePath(folder);
+			if (!this.app.vault.getAbstractFileByPath(normalizedFolder)) {
+				await this.app.vault.createFolder(normalizedFolder);
+			}
+		}
+
 		const file = await this.app.vault.create(path, buildEventNoteContent(options.title));
 		await this.stampFrontmatter(file, options);
 		return file;
