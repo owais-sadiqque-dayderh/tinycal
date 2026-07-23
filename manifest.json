@@ -1,0 +1,10 @@
+{
+	"id": "tinycal",
+	"name": "tinyCal",
+	"version": "0.1.0",
+	"minAppVersion": "1.5.0",
+	"description": "A tiny calendar for events that run until you say they're done, linked to your notes.",
+	"author": "owais-sadiqque-dayderh",
+	"authorUrl": "https://github.com/owais-sadiqque-dayderh",
+	"isDesktopOnly": true
+}
